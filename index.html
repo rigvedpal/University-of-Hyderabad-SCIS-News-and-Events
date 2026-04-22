@@ -1,0 +1,273 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News &amp; Events - SCIS, University of Hyderabad</title>
+  <meta name="description" content="Latest news, seminars, PhD defences, talks and events at the School of Computer and Information Sciences, University of Hyderabad." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f2347'/><text x='16' y='22' text-anchor='middle' font-size='16' font-family='serif' fill='%23c8a84b'>S</text></svg>">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-brand">
+      <div class="nav-logo">SC</div>
+      <div class="nav-name">
+        School of Computer &amp; Information Sciences
+        <small>University of Hyderabad</small>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="https://scis.uohyd.ac.in/" target="_blank">Home</a>
+      <a href="https://scis.uohyd.ac.in/" target="_blank">Academics</a>
+      <a href="https://scis.uohyd.ac.in/" target="_blank">People</a>
+      <a href="index.html" class="active">News &amp; Events</a>
+      <a href="https://scis.uohyd.ac.in/" target="_blank">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <span class="auth-status" id="auth-status">Visitor mode</span>
+      <button class="nav-auth-btn" id="nav-auth-btn" onclick="toggleAuthAction()">Admin Login</button>
+      <button class="nav-add-btn" onclick="openAddModal()">+ Add Event</button>
+    </div>
+  </div>
+</nav>
+
+<div class="ticker-bar">
+  <div class="ticker-track" id="ticker-track"></div>
+</div>
+
+<header class="hero hero--with-intro" id="hero" data-intro-duration="5200">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-intro" id="hero-intro" aria-hidden="true">
+    <div class="hero-intro-media">
+      <video class="hero-intro-video" id="hero-intro-video" autoplay muted playsinline preload="auto">
+        <source src="media/uoh-campus.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-intro-fallback" aria-hidden="true"></div>
+    </div>
+    <div class="hero-intro-overlay"></div>
+    <p class="hero-intro-status visually-hidden" id="hero-intro-status">Loading campus video...</p>
+    <button class="hero-intro-retry" id="hero-intro-retry" type="button">Retry video</button>
+    <div class="hero-page-curl" aria-hidden="true"></div>
+  </div>
+  <div class="container">
+    <div class="hero-eyebrow">
+      <span>*</span> School of Computer &amp; Information Sciences
+    </div>
+    <h1 class="hero-title">News &amp; <span>Events</span></h1>
+    <p class="hero-sub">Stay updated with seminars, PhD defences, pre-PhD talks, workshops, and the latest news from SCIS.</p>
+
+    <div class="stats-row" role="region" aria-label="Event statistics">
+      <div class="stat-item"><div class="stat-num" id="s-total">-</div><div class="stat-label">Total Events</div></div>
+      <div class="stat-item"><div class="stat-num" id="s-upcoming">-</div><div class="stat-label">Upcoming</div></div>
+      <div class="stat-item"><div class="stat-num" id="s-seminars">-</div><div class="stat-label">Seminars</div></div>
+      <div class="stat-item"><div class="stat-num" id="s-phd">-</div><div class="stat-label">PhD Events</div></div>
+      <div class="stat-item"><div class="stat-num" id="s-news">-</div><div class="stat-label">News &amp; More</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="main-content" id="main">
+  <div class="container">
+    <div class="next-event-strip" id="next-strip" role="complementary" aria-label="Next upcoming event">Loading...</div>
+
+    <div class="controls-bar" role="search" aria-label="Filter events">
+      <div class="search-wrap">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          type="search"
+          id="search-input"
+          class="search-input"
+          placeholder="Search events, speakers, topics..."
+          aria-label="Search events"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="filter-pills" role="group" aria-label="Filter by category">
+        <button class="pill active" data-cat="all" onclick="setCat(this)">All</button>
+        <button class="pill" data-cat="seminar" onclick="setCat(this)">Seminar</button>
+        <button class="pill" data-cat="phd-defence" onclick="setCat(this)">PhD Defence</button>
+        <button class="pill" data-cat="pre-phd" onclick="setCat(this)">Pre-PhD Talk</button>
+        <button class="pill" data-cat="talk" onclick="setCat(this)">Talk</button>
+        <button class="pill" data-cat="workshop" onclick="setCat(this)">Workshop</button>
+        <button class="pill" data-cat="hackathon" onclick="setCat(this)">Hackathon</button>
+        <button class="pill" data-cat="news" onclick="setCat(this)">News</button>
+      </div>
+
+      <div class="controls-right">
+        <select id="time-filter" class="time-select" aria-label="Filter by time">
+          <option value="all">All Time</option>
+          <option value="upcoming">Upcoming</option>
+          <option value="past">Past</option>
+        </select>
+        <div class="view-toggle" role="group" aria-label="View mode">
+          <button class="view-btn active" id="btn-grid" onclick="setView('grid')" title="Grid view" aria-pressed="true">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="6" height="6" rx="1"/><rect x="8" y="0" width="6" height="6" rx="1"/><rect x="0" y="8" width="6" height="6" rx="1"/><rect x="8" y="8" width="6" height="6" rx="1"/></svg>
+          </button>
+          <button class="view-btn" id="btn-list" onclick="setView('list')" title="List view" aria-pressed="false">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect y="0" width="14" height="2.5" rx="1"/><rect y="5.5" width="14" height="2.5" rx="1"/><rect y="11" width="14" height="2.5" rx="1"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h2 class="section-title">Events &amp; News</h2>
+      <span class="result-count" id="result-count" aria-live="polite"></span>
+    </div>
+
+    <div id="grid-container" class="grid-view" role="list" aria-label="Events grid"></div>
+    <div id="list-container" class="list-view" role="list" aria-label="Events list" style="display:none"></div>
+
+    <div class="empty-state" id="empty-state" role="status">
+      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <h3>No events found</h3>
+      <p>Try adjusting your search or filters.</p>
+    </div>
+  </div>
+</main>
+
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <div class="modal-accent" id="modal-accent"></div>
+    <div class="modal-header">
+      <div class="modal-header-top">
+        <div id="modal-badges"></div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
+      </div>
+      <h2 class="modal-title" id="modal-title"></h2>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="add-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="add-modal-title">
+  <div class="modal" style="max-width:580px">
+    <div class="modal-accent" style="background:var(--navy-mid)"></div>
+    <div class="modal-header">
+      <div class="modal-header-top">
+        <h2 class="modal-title" id="add-modal-title">Add New Event</h2>
+        <button class="modal-close" onclick="closeAddModal()" aria-label="Close">×</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <form id="add-event-form" onsubmit="submitAddEvent(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="grid-column:1/-1">
+            <label style="font-size:12px;color:#6b7280;font-weight:500;display:block;margin-bottom:4px">Event Title *</label>
+            <input type="text" name="title" required placeholder="e.g. Seminar on Deep Learning" style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none">
+          </div>
+          <div>
+            <label style="font-size:12px;color:#6b7280;font-weight:500;display:block;margin-bottom:4px">Category *</label>
+            <select name="cat" required style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none;background:#fff">
+              <option value="seminar">Seminar</option>
+              <option value="phd-defence">PhD Defence</option>
+              <option value="pre-phd">Pre-PhD Talk</option>
+              <option value="talk">Talk</option>
+              <option value="workshop">Workshop</option>
+              <option value="hackathon">Hackathon</option>
+              <option value="news">News</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px;color:#6b7280;font-weight:500;display:block;margin-bottom:4px">Date *</label>
+            <input type="date" name="date" required style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none">
+          </div>
+          <div>
+            <label style="font-size:12px;color:#6b7280;font-weight:500;display:block;margin-bottom:4px">Time</label>
+            <input type="text" name="time" placeholder="e.g. 11:00 AM" style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none">
+          </div>
+          <div>
+            <label style="font-size:12px;color:#6b7280;font-weight:500;display:block;margin-bottom:4px">Venue</label>
+            <input type="text" name="venue" placeholder="e.g. Seminar Hall, SCIS" style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none">
+          </div>
+          <div>
+            <label style="font-size:12px;color:#6b7280;font-weight:500;display:block;margin-bottom:4px">Speaker Name</label>
+            <input type="text" name="speaker" placeholder="e.g. Prof. Rajesh Kumar" style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none">
+          </div>
+          <div style="grid-column:1/-1">
+            <label style="font-size:12px;color:#6b7280;font-weight:500;display:block;margin-bottom:4px">Speaker Affiliation</label>
+            <input type="text" name="speakerAff" placeholder="e.g. IIT Madras" style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none">
+          </div>
+          <div style="grid-column:1/-1">
+            <label style="font-size:12px;color:#6b7280;font-weight:500;display:block;margin-bottom:4px">Short Description *</label>
+            <textarea name="desc" required rows="2" placeholder="Brief summary (shown on card)" style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none;resize:vertical"></textarea>
+          </div>
+          <div style="grid-column:1/-1">
+            <label style="font-size:12px;color:#6b7280;font-weight:500;display:block;margin-bottom:4px">Abstract / Full Details</label>
+            <textarea name="abstract" rows="3" placeholder="Full abstract or detailed description" style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none;resize:vertical"></textarea>
+          </div>
+          <div>
+            <label style="font-size:12px;color:#6b7280;font-weight:500;display:block;margin-bottom:4px">Tags (comma-separated)</label>
+            <input type="text" name="tags" placeholder="AI, Deep Learning, NLP" style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none">
+          </div>
+          <div>
+            <label style="font-size:12px;color:#6b7280;font-weight:500;display:block;margin-bottom:4px">External Link (optional)</label>
+            <input type="url" name="link" placeholder="https://..." style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none">
+          </div>
+          <div style="grid-column:1/-1">
+            <label style="font-size:12px;color:#6b7280;font-weight:500;display:block;margin-bottom:4px">Image URL (optional)</label>
+            <input type="url" name="image" placeholder="https://... or hosted image path" style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none">
+          </div>
+          <div style="grid-column:1/-1;display:flex;gap:10px;margin-top:4px">
+            <button type="submit" class="btn-primary" style="flex:1">Add Event</button>
+            <button type="button" class="btn-outline" onclick="closeAddModal()">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="login-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="login-modal-title">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-accent" style="background:var(--gold)"></div>
+    <div class="modal-header">
+      <div class="modal-header-top">
+        <h2 class="modal-title" id="login-modal-title">Admin Login</h2>
+        <button class="modal-close" onclick="closeLoginModal()" aria-label="Close">×</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p class="auth-helper-text">Sign in to add, edit, and delete events.</p>
+      <form id="login-form" onsubmit="submitLogin(event)">
+        <div class="auth-form-grid">
+          <div>
+            <label class="auth-label" for="login-username">Username</label>
+            <input class="auth-input" id="login-username" name="username" type="text" autocomplete="username" required>
+          </div>
+          <div>
+            <label class="auth-label" for="login-password">Password</label>
+            <input class="auth-input" id="login-password" name="password" type="password" autocomplete="current-password" required>
+          </div>
+          <p class="auth-error" id="login-error" aria-live="polite"></p>
+          <div class="auth-actions">
+            <button type="submit" class="btn-primary">Login</button>
+            <button type="button" class="btn-outline" onclick="closeLoginModal()">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>
+      © 2026 School of Computer and Information Sciences, University of Hyderabad ·
+      <a href="mailto:officescis@uohyd.ac.in">officescis@uohyd.ac.in</a> ·
+      <a href="https://scis.uohyd.ac.in" target="_blank">scis.uohyd.ac.in</a>
+    </p>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
