@@ -589,6 +589,28 @@ select, input { font-family: var(--font-sans); }
   transform: translateY(-2px);
   border-color: var(--border-2);
 }
+.event-card.is-past {
+  background: linear-gradient(180deg, #f1f3f6 0%, #e6e9ee 100%);
+  border-color: #d5dae2;
+}
+.event-card.is-past:hover {
+  border-color: #c2c8d2;
+  box-shadow: 0 8px 20px rgba(31, 41, 55, 0.12);
+}
+.event-card.is-past .card-title {
+  color: #364152;
+}
+.event-card.is-past .card-desc,
+.event-card.is-past .date-text,
+.event-card.is-past .speaker-name,
+.event-card.is-past .card-cta {
+  color: #667085;
+}
+.event-card.is-past .tag {
+  background: #dde2e9;
+  border-color: #c8ced8;
+  color: #4b5565;
+}
 
 .card-accent-bar { height: 4px; }
 
@@ -706,6 +728,32 @@ select, input { font-family: var(--font-sans); }
 .list-card:hover {
   box-shadow: var(--shadow-sm);
   border-color: var(--border-2);
+}
+.list-card.is-past {
+  background: linear-gradient(180deg, #eef1f5 0%, #e3e7ed 100%);
+  border-color: #d3d8e0;
+}
+.list-card.is-past:hover {
+  border-color: #c1c8d2;
+}
+.list-card.is-past .list-card-title {
+  color: #364152;
+}
+.list-card.is-past .list-card-sub,
+.list-card.is-past .list-month,
+.list-card.is-past .list-year {
+  color: #667085;
+}
+.list-card.is-past .list-day {
+  color: #546173;
+}
+.list-card.is-past .list-card-left {
+  border-right-color: #cfd5dd;
+}
+.list-card.is-past .list-card-placeholder {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(31,41,55,0.62)),
+    linear-gradient(135deg, rgba(148,163,184,0.32), rgba(71,85,105,0.16) 42%, rgba(51,65,85,0.9));
 }
 .list-card-visual {
   width: 132px;

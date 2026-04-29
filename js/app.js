@@ -425,8 +425,8 @@ function renderGrid(events) {
     const upcoming = isUpcoming(event);
     const speakerInitials = initials(event.speaker);
     return `
-      <div class="event-card" data-event-id="${event.id}" onclick="openModal(${event.id})" role="article" aria-label="${escapeHTML(event.title)}">
-        <div class="card-accent-bar" style="background:${meta.color}"></div>
+      <div class="event-card ${upcoming ? 'is-upcoming' : 'is-past'}" data-event-id="${event.id}" onclick="openModal(${event.id})" role="article" aria-label="${escapeHTML(event.title)}">
+        <div class="card-accent-bar" style="background:${upcoming ? meta.color : '#5f6673'}"></div>
         <div class="card-body">
           <div class="card-meta">
             ${catBadgeHTML(event.cat)}
@@ -459,7 +459,7 @@ function renderList(events) {
   container.innerHTML = events.map((event) => {
     const upcoming = isUpcoming(event);
     return `
-      <div class="list-card" data-event-id="${event.id}" onclick="openModal(${event.id})" role="article" aria-label="${escapeHTML(event.title)}">
+      <div class="list-card ${upcoming ? 'is-upcoming' : 'is-past'}" data-event-id="${event.id}" onclick="openModal(${event.id})" role="article" aria-label="${escapeHTML(event.title)}">
         ${listVisualHTML(event)}
         <div class="list-card-left">
           <div class="list-date-block">
